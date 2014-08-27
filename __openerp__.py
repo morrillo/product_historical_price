@@ -24,9 +24,9 @@
 ################################################################################
 {
     "name" : "Product Historical Price",
-    "version" : "0.2",
+    "version" : "0.2.1",
     "depends" : ["product","decimal_precision","account"],
-    "author" : "Vauxoo",
+    "author" : "Vauxoo,Moldeo",
     "description" : """
     What do this module:
     This module gets the historical price of a product

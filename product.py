@@ -31,7 +31,7 @@ import time
 import math
 
 
-class product_historical(osv.Model):
+class product_historical(osv.osv):
     """
     product_historical
     """
@@ -43,7 +43,7 @@ class product_historical(osv.Model):
             if self.browse(cr, uid, id).list_price != self.browse(cr, uid,
                                                                   id).\
                                                          list_price_historical:
-                res[id] = self.browse(cr, uid, id).list_price
+                res[id] = self.browse(cr, uid, id).lst_price
                 product_hist.create(cr, uid, {
                     'product_id': id,
                     'name': time.strftime('%Y-%m-%d %H:%M:%S'),
@@ -54,6 +54,7 @@ class product_historical(osv.Model):
     def _get_historical_cost(self, cr, uid, ids, field_name, field_value,
                              arg, context={}):
         res = {}
+	import pdb;pdb.set_trace()
         product_hist = self.pool.get('product.historic.cost')
         for id in ids:
             if self.browse(cr, uid, id).standard_price != self.browse(cr,
@@ -68,18 +69,17 @@ class product_historical(osv.Model):
 
     _inherit = 'product.product'
     _columns = {
-        'list_price_historical':
-           fields.function(_get_historical_price,
-                                         method=True, string='Latest Price',
+        'list_price_historical': fields.function(_get_historical_price,
+                                         string='Latest Price',
                                          type='float',
                                          digits_compute=dp.get_precision(
                                              'List_Price_Historical'),
                                          store={'product.product': ( lambda
                                              self, cr, uid, ids, c={}: ids, [
-                                                 'list_price'], 50), },
+                                                 'lst_price'], 50), },
                                              help="""Latest Recorded Historical
                                              Value"""),
-        'cost_historical': fields.function(_get_historical_cost, method=True,
+        'cost_historical': fields.function(_get_historical_cost,method=True, 
                                            string=' Latest Cost', type='float',
                                            digits_compute=dp.get_precision(
                                                'Cost_Historical'),
@@ -93,12 +93,12 @@ class product_historical(osv.Model):
                                                      'Historical Prices'),
         'cost_historical_ids': fields.one2many('product.historic.cost',
                                                'product_id',
-                                               'Historical Prices'),
+                                               'Historical Costs'),
 
     }
 
 
-class product_historic_price(osv.Model):
+class product_historic_price(osv.osv):
     _order = "name desc"
     _name = "product.historic.price"
     _description = "Historical Price List"
@@ -121,7 +121,7 @@ class product_historic_price(osv.Model):
                  }
 
 
-class product_historic_cost(osv.Model):
+class product_historic_cost(osv.osv):
     _order = "name desc"
     _name = "product.historic.cost"
     _description = "Historical Price List"
