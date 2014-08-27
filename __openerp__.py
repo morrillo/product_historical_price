@@ -24,7 +24,7 @@
 ################################################################################
 {
     "name" : "Product Historical Price",
-    "version" : "0.2.1",
+    "version" : "0.2.2",
     "depends" : ["product","decimal_precision","account"],
     "author" : "Vauxoo,Moldeo",
     "description" : """
@@ -37,7 +37,7 @@
     "update_xml" : ["view/product_view.xml",
                     "data/product_data.xml",
 #                    "security/groups.xml",
-                    "security/ir.model.access.csv",
+#                    "security/ir.model.access.csv",
                     ],
     "active": False,
     "installable": True,
